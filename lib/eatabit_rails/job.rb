@@ -37,6 +37,12 @@ module EatabitRails
       @account            = attributes['account']
       @printer            = attributes['printer']
     end
+    
+    def to_hash
+      hash = {}
+      instance_variables.each {|var| hash[var.to_s.delete("@")] = instance_variable_get(var) }
+      hash
+    end
 
     def self.create(printer_id, job_attributes)
       job_uri             = EatabitRails::REST::Uri.new.job printer_id
